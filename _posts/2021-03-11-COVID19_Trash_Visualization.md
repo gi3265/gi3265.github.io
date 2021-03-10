@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: single
 title: "COVID19_Trash_Data_Visualization"
 description: "."
 comments: true
