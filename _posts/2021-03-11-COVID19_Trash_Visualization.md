@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "COVID19_Trash_Data_Visualization"
-description: "."
+description: "2nd version"
 comments: true
 published: true
 typora-root-url: ../
