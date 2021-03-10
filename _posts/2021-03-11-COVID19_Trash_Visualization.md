@@ -4,7 +4,7 @@ title: "COVID19_Trash_Data_Visualization"
 description: "."
 comments: true
 published: true
-typora-a-copy-images-to: gi3265.github.io\images
+typora-root-url: ../
 ---
 
 
@@ -1414,5 +1414,4 @@ pd.options.plotting.backend = 'plotly'
 home_weekly[['dt', 'week_avg']].groupby('dt').sum().plot()
 ```
 
-![2021-03-10-COVID19_Trash](C:\Users\sgi40\OneDrive\WallPaper\github\Blog_Image\2021-03-10-COVID19_Trash.png)
-
+![2021-03-10-COVID19_Trash](/assets/images/2021-03-10-COVID19_Trash.png)
