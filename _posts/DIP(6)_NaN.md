@@ -1,0 +1,1807 @@
+# 누락값이란?
+
+
+```python
+from numpy import NaN, nan, NAN
+```
+
+
+```python
+NaN == 0
+```
+
+
+
+
+    False
+
+
+
+
+```python
+NaN == False
+```
+
+
+
+
+    False
+
+
+
+
+```python
+NaN == ''
+```
+
+
+
+
+    False
+
+
+
+
+```python
+NaN == NaN
+```
+
+
+
+
+    False
+
+
+
+비교할 값이 없는 것이니 상기의 사례에서 모두 False 출력
+
+## 누락값 확인하는 방법: pd.isnull()
+
+
+```python
+import pandas as pd
+
+pd.isnull(NaN)
+```
+
+
+
+
+    True
+
+
+
+
+```python
+pd.notnull(NaN)
+```
+
+
+
+
+    False
+
+
+
+
+```python
+pd.notnull(42)
+```
+
+
+
+
+    True
+
+
+
+## 누락값이 생기는 이유
+
+### 누락값이 있는 데이터 집합을 연결 -> 더 많은 누락값들이 생김
+
+
+```python
+visited = pd.read_csv('DoitPandas_Resource/data/survey_visited.csv')
+survey = pd.read_csv('DoitPandas_Resource/data/survey_survey.csv')
+visited
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ident</th>
+      <th>site</th>
+      <th>dated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>619</td>
+      <td>DR-1</td>
+      <td>1927-02-08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>622</td>
+      <td>DR-1</td>
+      <td>1927-02-10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>734</td>
+      <td>DR-3</td>
+      <td>1939-01-07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>735</td>
+      <td>DR-3</td>
+      <td>1930-01-12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>751</td>
+      <td>DR-3</td>
+      <td>1930-02-26</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>752</td>
+      <td>DR-3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>837</td>
+      <td>MSK-4</td>
+      <td>1932-01-14</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>844</td>
+      <td>DR-1</td>
+      <td>1932-03-22</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+survey
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>taken</th>
+      <th>person</th>
+      <th>quant</th>
+      <th>reading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>619</td>
+      <td>dyer</td>
+      <td>rad</td>
+      <td>9.82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>619</td>
+      <td>dyer</td>
+      <td>sal</td>
+      <td>0.13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>622</td>
+      <td>dyer</td>
+      <td>rad</td>
+      <td>7.80</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>622</td>
+      <td>dyer</td>
+      <td>sal</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>734</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>8.41</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>734</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>734</td>
+      <td>pb</td>
+      <td>temp</td>
+      <td>-21.50</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>735</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>7.22</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>735</td>
+      <td>NaN</td>
+      <td>sal</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>735</td>
+      <td>NaN</td>
+      <td>temp</td>
+      <td>-26.00</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>751</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>4.35</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>751</td>
+      <td>pb</td>
+      <td>temp</td>
+      <td>-18.50</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>751</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>752</td>
+      <td>lake</td>
+      <td>rad</td>
+      <td>2.19</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>752</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>752</td>
+      <td>lake</td>
+      <td>temp</td>
+      <td>-16.00</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>752</td>
+      <td>roe</td>
+      <td>sal</td>
+      <td>41.60</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>837</td>
+      <td>lake</td>
+      <td>rad</td>
+      <td>1.46</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>837</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.21</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>837</td>
+      <td>roe</td>
+      <td>sal</td>
+      <td>22.50</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>844</td>
+      <td>roe</td>
+      <td>rad</td>
+      <td>11.25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+visited.merge(survey, left_on = 'ident', right_on = 'taken')
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ident</th>
+      <th>site</th>
+      <th>dated</th>
+      <th>taken</th>
+      <th>person</th>
+      <th>quant</th>
+      <th>reading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>619</td>
+      <td>DR-1</td>
+      <td>1927-02-08</td>
+      <td>619</td>
+      <td>dyer</td>
+      <td>rad</td>
+      <td>9.82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>619</td>
+      <td>DR-1</td>
+      <td>1927-02-08</td>
+      <td>619</td>
+      <td>dyer</td>
+      <td>sal</td>
+      <td>0.13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>622</td>
+      <td>DR-1</td>
+      <td>1927-02-10</td>
+      <td>622</td>
+      <td>dyer</td>
+      <td>rad</td>
+      <td>7.80</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>622</td>
+      <td>DR-1</td>
+      <td>1927-02-10</td>
+      <td>622</td>
+      <td>dyer</td>
+      <td>sal</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>734</td>
+      <td>DR-3</td>
+      <td>1939-01-07</td>
+      <td>734</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>8.41</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>734</td>
+      <td>DR-3</td>
+      <td>1939-01-07</td>
+      <td>734</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>734</td>
+      <td>DR-3</td>
+      <td>1939-01-07</td>
+      <td>734</td>
+      <td>pb</td>
+      <td>temp</td>
+      <td>-21.50</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>735</td>
+      <td>DR-3</td>
+      <td>1930-01-12</td>
+      <td>735</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>7.22</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>735</td>
+      <td>DR-3</td>
+      <td>1930-01-12</td>
+      <td>735</td>
+      <td>NaN</td>
+      <td>sal</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>735</td>
+      <td>DR-3</td>
+      <td>1930-01-12</td>
+      <td>735</td>
+      <td>NaN</td>
+      <td>temp</td>
+      <td>-26.00</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>751</td>
+      <td>DR-3</td>
+      <td>1930-02-26</td>
+      <td>751</td>
+      <td>pb</td>
+      <td>rad</td>
+      <td>4.35</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>751</td>
+      <td>DR-3</td>
+      <td>1930-02-26</td>
+      <td>751</td>
+      <td>pb</td>
+      <td>temp</td>
+      <td>-18.50</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>751</td>
+      <td>DR-3</td>
+      <td>1930-02-26</td>
+      <td>751</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>752</td>
+      <td>DR-3</td>
+      <td>NaN</td>
+      <td>752</td>
+      <td>lake</td>
+      <td>rad</td>
+      <td>2.19</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>752</td>
+      <td>DR-3</td>
+      <td>NaN</td>
+      <td>752</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>752</td>
+      <td>DR-3</td>
+      <td>NaN</td>
+      <td>752</td>
+      <td>lake</td>
+      <td>temp</td>
+      <td>-16.00</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>752</td>
+      <td>DR-3</td>
+      <td>NaN</td>
+      <td>752</td>
+      <td>roe</td>
+      <td>sal</td>
+      <td>41.60</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>837</td>
+      <td>MSK-4</td>
+      <td>1932-01-14</td>
+      <td>837</td>
+      <td>lake</td>
+      <td>rad</td>
+      <td>1.46</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>837</td>
+      <td>MSK-4</td>
+      <td>1932-01-14</td>
+      <td>837</td>
+      <td>lake</td>
+      <td>sal</td>
+      <td>0.21</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>837</td>
+      <td>MSK-4</td>
+      <td>1932-01-14</td>
+      <td>837</td>
+      <td>roe</td>
+      <td>sal</td>
+      <td>22.50</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>844</td>
+      <td>DR-1</td>
+      <td>1932-03-22</td>
+      <td>844</td>
+      <td>roe</td>
+      <td>rad</td>
+      <td>11.25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### 데이터 입력을 잘못하는 경우
+
+
+```python
+nan_included_series = pd.Series({'name': 'Yuna', 'sex': 'Female', 'job': 'Dancer', 'else': nan})
+nan_included_series
+```
+
+
+
+
+    name      Yuna
+    sex     Female
+    job     Dancer
+    else       NaN
+    dtype: object
+
+
+
+
+```python
+nan_included_df = pd.DataFrame({
+    'name': ['Yuna', 'Yujeong', 'Minyoung', 'Eunji'],
+    'nickname': ['Danbaljwa', 'GGOBUGJWA', 'Mebojwa','Wangnunjwa'],
+    'position': ['Subrapper', 'Center', 'Leadvocal', nan]
+})
+nan_included_df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>nickname</th>
+      <th>position</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Yuna</td>
+      <td>Danbaljwa</td>
+      <td>Subrapper</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Yujeong</td>
+      <td>GGOBUGJWA</td>
+      <td>Center</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Minyoung</td>
+      <td>Mebojwa</td>
+      <td>Leadvocal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eunji</td>
+      <td>Wangnunjwa</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### 범위를 지정하여 데이터를 추출할 때 누락값이 생기는 경우
+
+
+```python
+gapminder = pd.read_csv('DoitPandas_Resource/data/gapminder.tsv', sep = '\t')
+gapminder
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>continent</th>
+      <th>year</th>
+      <th>lifeExp</th>
+      <th>pop</th>
+      <th>gdpPercap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1952</td>
+      <td>28.801</td>
+      <td>8425333</td>
+      <td>779.445314</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1957</td>
+      <td>30.332</td>
+      <td>9240934</td>
+      <td>820.853030</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1962</td>
+      <td>31.997</td>
+      <td>10267083</td>
+      <td>853.100710</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1967</td>
+      <td>34.020</td>
+      <td>11537966</td>
+      <td>836.197138</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>Asia</td>
+      <td>1972</td>
+      <td>36.088</td>
+      <td>13079460</td>
+      <td>739.981106</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1699</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1987</td>
+      <td>62.351</td>
+      <td>9216418</td>
+      <td>706.157306</td>
+    </tr>
+    <tr>
+      <th>1700</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1992</td>
+      <td>60.377</td>
+      <td>10704340</td>
+      <td>693.420786</td>
+    </tr>
+    <tr>
+      <th>1701</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>1997</td>
+      <td>46.809</td>
+      <td>11404948</td>
+      <td>792.449960</td>
+    </tr>
+    <tr>
+      <th>1702</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>2002</td>
+      <td>39.989</td>
+      <td>11926563</td>
+      <td>672.038623</td>
+    </tr>
+    <tr>
+      <th>1703</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>2007</td>
+      <td>43.487</td>
+      <td>12311143</td>
+      <td>469.709298</td>
+    </tr>
+  </tbody>
+</table>
+<p>1704 rows × 6 columns</p>
+</div>
+
+
+
+
+```python
+life_exp = gapminder.groupby(['year',])['lifeExp'].mean()
+life_exp
+```
+
+
+
+
+    year
+    1952    49.057620
+    1957    51.507401
+    1962    53.609249
+    1967    55.678290
+    1972    57.647386
+    1977    59.570157
+    1982    61.533197
+    1987    63.212613
+    1992    64.160338
+    1997    65.014676
+    2002    65.694923
+    2007    67.007423
+    Name: lifeExp, dtype: float64
+
+
+
+
+```python
+life_exp.loc[range(2000, 2010),]
+```
+
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-16-f18f2a91c80a> in <module>
+    ----> 1 life_exp.loc[range(2000, 2010),]
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in __getitem__(self, key)
+        871                     # AttributeError for IntervalTree get_value
+        872                     pass
+    --> 873             return self._getitem_tuple(key)
+        874         else:
+        875             # we by definition only have the 0th axis
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in _getitem_tuple(self, tup)
+       1051         # ugly hack for GH #836
+       1052         if self._multi_take_opportunity(tup):
+    -> 1053             return self._multi_take(tup)
+       1054 
+       1055         return self._getitem_tuple_same_dim(tup)
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in _multi_take(self, tup)
+       1001         """
+       1002         # GH 836
+    -> 1003         d = {
+       1004             axis: self._get_listlike_indexer(key, axis)
+       1005             for (key, axis) in zip(tup, self.obj._AXIS_ORDERS)
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in <dictcomp>(.0)
+       1002         # GH 836
+       1003         d = {
+    -> 1004             axis: self._get_listlike_indexer(key, axis)
+       1005             for (key, axis) in zip(tup, self.obj._AXIS_ORDERS)
+       1006         }
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in _get_listlike_indexer(self, key, axis, raise_missing)
+       1252             keyarr, indexer, new_indexer = ax._reindex_non_unique(keyarr)
+       1253 
+    -> 1254         self._validate_read_indexer(keyarr, indexer, axis, raise_missing=raise_missing)
+       1255         return keyarr, indexer
+       1256 
+    
+
+    ~\anaconda3\lib\site-packages\pandas\core\indexing.py in _validate_read_indexer(self, key, indexer, axis, raise_missing)
+       1313 
+       1314                 with option_context("display.max_seq_items", 10, "display.width", 80):
+    -> 1315                     raise KeyError(
+       1316                         "Passing list-likes to .loc or [] with any missing labels "
+       1317                         "is no longer supported. "
+    
+
+    KeyError: "Passing list-likes to .loc or [] with any missing labels is no longer supported. The following labels were missing: Int64Index([2000, 2001, 2003, 2004, 2005, 2006, 2008, 2009], dtype='int64', name='year'). See https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#deprecate-loc-reindex-listlike"
+
+
+이런 방식으로는 더 이상 누락값 출력할 수 없음.
+
+번외로 불린 추출을 통해 누락값 없이 원하는 행들을 추출할 수 있음
+
+
+```python
+life_exp[life_exp.index>=2000]
+```
+
+
+
+
+    year
+    2002    65.694923
+    2007    67.007423
+    Name: lifeExp, dtype: float64
+
+
+
+## 누락값의 개수를 알아보는 방법
+
+
+```python
+ebola = pd.read_csv('DoitPandas_Resource/data/country_timeseries.csv')
+```
+
+### count()매서드로 누락값이 아닌 값의 개수를 알아보기
+
+
+```python
+ebola.count()
+```
+
+
+
+
+    Date                   122
+    Day                    122
+    Cases_Guinea            93
+    Cases_Liberia           83
+    Cases_SierraLeone       87
+    Cases_Nigeria           38
+    Cases_Senegal           25
+    Cases_UnitedStates      18
+    Cases_Spain             16
+    Cases_Mali              12
+    Deaths_Guinea           92
+    Deaths_Liberia          81
+    Deaths_SierraLeone      87
+    Deaths_Nigeria          38
+    Deaths_Senegal          22
+    Deaths_UnitedStates     18
+    Deaths_Spain            16
+    Deaths_Mali             12
+    dtype: int64
+
+
+
+### 전체 행의 개수에서 누락값이 아닌 행의 개수를 빼는 방법
+
+
+```python
+ebola.shape[0] - ebola.count()
+```
+
+
+
+
+    Date                     0
+    Day                      0
+    Cases_Guinea            29
+    Cases_Liberia           39
+    Cases_SierraLeone       35
+    Cases_Nigeria           84
+    Cases_Senegal           97
+    Cases_UnitedStates     104
+    Cases_Spain            106
+    Cases_Mali             110
+    Deaths_Guinea           30
+    Deaths_Liberia          41
+    Deaths_SierraLeone      35
+    Deaths_Nigeria          84
+    Deaths_Senegal         100
+    Deaths_UnitedStates    104
+    Deaths_Spain           106
+    Deaths_Mali            110
+    dtype: int64
+
+
+
+### np.count_nonzero, isnull 매서드를 조합하는 방법
+
+
+```python
+import numpy as np
+np.count_nonzero(ebola.isnull())
+```
+
+
+
+
+    1214
+
+
+
+#### 특정 열에서 위의 방법으로 누락값 개수 구하기
+
+
+```python
+np.count_nonzero(ebola['Cases_Guinea'].isnull())
+```
+
+
+
+
+    29
+
+
+
+### series.value_counts() 매서드
+
+
+```python
+ebola.Cases_Guinea.value_counts(dropna = False)
+```
+
+
+
+
+    NaN       29
+    86.0       3
+    495.0      2
+    112.0      2
+    390.0      2
+              ..
+    235.0      1
+    231.0      1
+    226.0      1
+    224.0      1
+    2776.0     1
+    Name: Cases_Guinea, Length: 89, dtype: int64
+
+
+
+위에서 보듯이 꼭 '데이터프레임[열이름]'으로 써야 하는 것은 아니고 '데이터 프레임.열이름'의 형태로 쓰이기도 한다!
+
+value_counts()매서드의 dropna 인자값으로 False를 주는 것은 기본 인자값이 True인 경우 NaN의 빈도에 해당하는 값은 drop 해버리기 때문이다. 한 마디로 NaN의 빈도를 버리지 말고 표시해 주라는 의미인 것
+
+## 누락값 처리하기
+
+### 변경
+
+#### .fillna(0)
+
+
+```python
+ebola.fillna(0).iloc[0:5, 0:5]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1/5/2015</td>
+      <td>289</td>
+      <td>2776.0</td>
+      <td>0.0</td>
+      <td>10030.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1/4/2015</td>
+      <td>288</td>
+      <td>2775.0</td>
+      <td>0.0</td>
+      <td>9780.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1/3/2015</td>
+      <td>287</td>
+      <td>2769.0</td>
+      <td>8166.0</td>
+      <td>9722.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1/2/2015</td>
+      <td>286</td>
+      <td>0.0</td>
+      <td>8157.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12/31/2014</td>
+      <td>284</td>
+      <td>2730.0</td>
+      <td>8115.0</td>
+      <td>9633.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+누락값을 모두 0으로 바꿔준다
+
+#### .fillna(method = 'ffill')
+
+
+```python
+ebola.fillna(method = 'ffill').iloc[0:10, 0:5]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1/5/2015</td>
+      <td>289</td>
+      <td>2776.0</td>
+      <td>NaN</td>
+      <td>10030.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1/4/2015</td>
+      <td>288</td>
+      <td>2775.0</td>
+      <td>NaN</td>
+      <td>9780.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1/3/2015</td>
+      <td>287</td>
+      <td>2769.0</td>
+      <td>8166.0</td>
+      <td>9722.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1/2/2015</td>
+      <td>286</td>
+      <td>2769.0</td>
+      <td>8157.0</td>
+      <td>9722.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12/31/2014</td>
+      <td>284</td>
+      <td>2730.0</td>
+      <td>8115.0</td>
+      <td>9633.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12/28/2014</td>
+      <td>281</td>
+      <td>2706.0</td>
+      <td>8018.0</td>
+      <td>9446.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>12/27/2014</td>
+      <td>280</td>
+      <td>2695.0</td>
+      <td>8018.0</td>
+      <td>9409.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>12/24/2014</td>
+      <td>277</td>
+      <td>2630.0</td>
+      <td>7977.0</td>
+      <td>9203.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>12/21/2014</td>
+      <td>273</td>
+      <td>2597.0</td>
+      <td>7977.0</td>
+      <td>9004.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>12/20/2014</td>
+      <td>272</td>
+      <td>2571.0</td>
+      <td>7862.0</td>
+      <td>8939.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+누락값이 발생하기 바로 이전 행에서의 같은 항목값으로 바꿔준다.
+
+#### .fillna(method = 'bfill')
+
+
+```python
+ebola.fillna(method = 'bfill').iloc[0:10, 0:5]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1/5/2015</td>
+      <td>289</td>
+      <td>2776.0</td>
+      <td>8166.0</td>
+      <td>10030.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1/4/2015</td>
+      <td>288</td>
+      <td>2775.0</td>
+      <td>8166.0</td>
+      <td>9780.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1/3/2015</td>
+      <td>287</td>
+      <td>2769.0</td>
+      <td>8166.0</td>
+      <td>9722.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1/2/2015</td>
+      <td>286</td>
+      <td>2730.0</td>
+      <td>8157.0</td>
+      <td>9633.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12/31/2014</td>
+      <td>284</td>
+      <td>2730.0</td>
+      <td>8115.0</td>
+      <td>9633.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12/28/2014</td>
+      <td>281</td>
+      <td>2706.0</td>
+      <td>8018.0</td>
+      <td>9446.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>12/27/2014</td>
+      <td>280</td>
+      <td>2695.0</td>
+      <td>7977.0</td>
+      <td>9409.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>12/24/2014</td>
+      <td>277</td>
+      <td>2630.0</td>
+      <td>7977.0</td>
+      <td>9203.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>12/21/2014</td>
+      <td>273</td>
+      <td>2597.0</td>
+      <td>7862.0</td>
+      <td>9004.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>12/20/2014</td>
+      <td>272</td>
+      <td>2571.0</td>
+      <td>7862.0</td>
+      <td>8939.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+마지막 값이 누락값인 경우 처리하지 못한다는 단점이 있음
+
+#### .interpolate()
+
+
+```python
+ebola.interpolate().iloc[0:10, 0:5]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1/5/2015</td>
+      <td>289</td>
+      <td>2776.0</td>
+      <td>NaN</td>
+      <td>10030.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1/4/2015</td>
+      <td>288</td>
+      <td>2775.0</td>
+      <td>NaN</td>
+      <td>9780.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1/3/2015</td>
+      <td>287</td>
+      <td>2769.0</td>
+      <td>8166.0</td>
+      <td>9722.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1/2/2015</td>
+      <td>286</td>
+      <td>2749.5</td>
+      <td>8157.0</td>
+      <td>9677.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12/31/2014</td>
+      <td>284</td>
+      <td>2730.0</td>
+      <td>8115.0</td>
+      <td>9633.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12/28/2014</td>
+      <td>281</td>
+      <td>2706.0</td>
+      <td>8018.0</td>
+      <td>9446.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>12/27/2014</td>
+      <td>280</td>
+      <td>2695.0</td>
+      <td>7997.5</td>
+      <td>9409.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>12/24/2014</td>
+      <td>277</td>
+      <td>2630.0</td>
+      <td>7977.0</td>
+      <td>9203.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>12/21/2014</td>
+      <td>273</td>
+      <td>2597.0</td>
+      <td>7919.5</td>
+      <td>9004.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>12/20/2014</td>
+      <td>272</td>
+      <td>2571.0</td>
+      <td>7862.0</td>
+      <td>8939.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+누락값의 앞 뒤 값 확인 후 그 두 값의 중간값으로 채워줌.
+
+### 삭제하기
+
+
+```python
+ebola.shape[0]
+```
+
+
+
+
+    122
+
+
+
+
+```python
+ebola.dropna()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Day</th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+      <th>Cases_Nigeria</th>
+      <th>Cases_Senegal</th>
+      <th>Cases_UnitedStates</th>
+      <th>Cases_Spain</th>
+      <th>Cases_Mali</th>
+      <th>Deaths_Guinea</th>
+      <th>Deaths_Liberia</th>
+      <th>Deaths_SierraLeone</th>
+      <th>Deaths_Nigeria</th>
+      <th>Deaths_Senegal</th>
+      <th>Deaths_UnitedStates</th>
+      <th>Deaths_Spain</th>
+      <th>Deaths_Mali</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <td>11/18/2014</td>
+      <td>241</td>
+      <td>2047.0</td>
+      <td>7082.0</td>
+      <td>6190.0</td>
+      <td>20.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>1214.0</td>
+      <td>2963.0</td>
+      <td>1267.0</td>
+      <td>8.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>6.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+ebola.dropna().shape[0]
+```
+
+
+
+
+    1
+
+
+
+굉장히 많은 값이 삭제됨. 자료 아까움. Last Resort!!!
+
+## 누락값이 포함된 데이터 계산하기
+
+
+```python
+ebola['Three_Cases_Sum'] = (ebola.Cases_Guinea + ebola.Cases_Liberia + ebola.Cases_SierraLeone)
+ebola.loc[:, ['Cases_Guinea', 'Cases_Liberia', 'Cases_SierraLeone', 'Three_Cases_Sum']]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Cases_Guinea</th>
+      <th>Cases_Liberia</th>
+      <th>Cases_SierraLeone</th>
+      <th>Three_Cases_Sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2776.0</td>
+      <td>NaN</td>
+      <td>10030.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2775.0</td>
+      <td>NaN</td>
+      <td>9780.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2769.0</td>
+      <td>8166.0</td>
+      <td>9722.0</td>
+      <td>20657.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>8157.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2730.0</td>
+      <td>8115.0</td>
+      <td>9633.0</td>
+      <td>20478.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>103.0</td>
+      <td>8.0</td>
+      <td>6.0</td>
+      <td>117.0</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>86.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>86.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>86.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>49.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>122 rows × 4 columns</p>
+</div>
+
+
+
+이렇게 그냥 합쳐서 새로운 열로 추가하면 한 열이라도 NaN일 경우 합은 무조건 NaN으로 남음.
+
+### 'sum'열 값의 총 합 구하기
+
+
+```python
+ebola.Three_Cases_Sum.sum(skipna = True)
+```
+
+
+
+
+    197682.0
+
+
+
+
+```python
+ebola.Three_Cases_Sum.sum(skipna = False)
+```
+
+
+
+
+    nan
+
+
+
+누락값을 스킵하도록 해야 sum의 결과값이 nan이 나오지 않음. 굳이 설정 안해도 skipna인자값은 True로 이미 설정되어 있긴 함
