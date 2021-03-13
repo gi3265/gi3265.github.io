@@ -17,7 +17,7 @@ minimal_mistakes_skin    : "aqua" #"default", "air", "aqua", "contrast", "dark",
 
 # Site Settings
 locale                   : "en-US"
-title                    : "SOpt_Github"
+title                    : "SOpt_Github_Blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "SOpt"
@@ -26,7 +26,7 @@ url                      : "https://gi3265.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gi3265/gi3265.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     :  "/assets/images/ironman.jpg" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -96,8 +96,8 @@ analytics:
 # Site Author
 author:
   name             : "SOpt"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Remember that you always have other **options** to choose from."
+  avatar           : "/assets/images/ironman.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "You always have other **options** to choose"
   location         : "Incheon, Republic Of Korea"
   email            :
   links:
@@ -131,7 +131,7 @@ footer:
       # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      # url: "https://github.com/gi3265"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
@@ -269,7 +269,7 @@ compress_html:
 
 
 # Defaults
-defaults:
+defaults:  #Front Matter에서 같은 형식을 통해 개별적으로 설정 가능함!
   # _posts
   - scope:
       path: ""
@@ -278,6 +278,6 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
