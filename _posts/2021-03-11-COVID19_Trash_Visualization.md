@@ -5,7 +5,7 @@ description: "2nd version"
 comments: true
 published: true
 typora-root-url: ../
-categories: "Dacon"
+categories: "Dacon_Projects"
 ---
 
 
