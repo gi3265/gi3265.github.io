@@ -1,6 +1,6 @@
 ---
-title: "Posts by Category"
+title: "Posts by Categories"
 layout: categories
-permalink: /categories/Dacon
+permalink: /categories/
 author_profile: true
 ---
