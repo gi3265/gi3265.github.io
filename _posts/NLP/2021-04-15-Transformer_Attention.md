@@ -3,12 +3,14 @@ layout: single
 date: 2021-04-15
 title: "자연어 처리: 트랜스포머"
 description: "Attention is all you need"
-comments = true
-published: true
+comments = True
+published: True
 categories: "NLP"
 toc: True
 toc_sticky: True
 ---
+
+
 
 # 자연어 처리: Transformer
 
