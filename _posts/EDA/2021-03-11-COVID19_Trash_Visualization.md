@@ -4,7 +4,7 @@ title: "COVID19_Trash_Data_Visualization"
 description: "2nd version"
 comments: true
 published: true
-typora-root-url: ../
+typora-root-url: ../../
 categories: "Dacon_Projects"
 toc: true
 ---

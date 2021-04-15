@@ -8,6 +8,7 @@ published: True
 categories: "NLP"
 toc: true
 toc_sticky: True
+typora-root-url: ../../
 ---
 
 
