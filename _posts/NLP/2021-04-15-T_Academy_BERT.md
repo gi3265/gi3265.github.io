@@ -100,7 +100,43 @@ RNN 모델의 단점을 극복하고자 탄생한 모델.
 
 ![Attention_Mechanism](/assets/images/NLP/Attention_Mechanism.png)
 
+### 2.3 Self-attention 모델의 등장
 
+#### "Attention is all you need!" ← 논문의 제목
+
+IDEA: RNN의 기본 방식 굳이 써야 해? 없애버리자. -> RNN에서 encoder과 decoder 제거
+
+![image-20210416024444456](/assets/images/NLP/image-20210416024444456.png)
+
+<학습>
+
+1. Decoder 결과가 정답과 많이 다름:
+   * 좋지 못한 context vector -> 좋지 못한 attention weight
+   * Fully connected feed forward network에서 score 조정 -> s1~s3 조정됨에 따라 Attention weight도 조정
+   
+2. 기존 RNN + Attention 방식: decoder가 해석하기에 가장 적합한 weight 찾고자 노력
+
+3. Attention이 decoder이 아니라, input인 값을 가장 잘 표현할 수 있도록 학습하면?
+
+   -> 자기 자신을 가장 잘 표현할 수 있는 좋은 임베딩
+
+4. Self-Attention 모델의 탄생!
+
+### 2.4 Self-Attention 모델의 작동 원리
+
+Query, Key, Value로 구성된 Attention layers를 동시에 여러개를 수행(<-효율적인 병렬 처리.GPU 여러대 필요로 함.)
+
+RNN은 이전 state를 기다리고 그 다음에야 다음 state를 예측하는 방식으로 수행되는 점과 대비됨.
+
+![image-20210416030154527](/assets/images/NLP/image-20210416030154527.png)
+
+
+
+# BERT
+
+* Self-Attention의 심화 버전: Multi-head Attention을 12개를 달아버림(그림은 3개가 달려있는 것)
+
+![image-20210416030426427](/assets/images/NLP/image-20210416030426427.png)
 
 
 
