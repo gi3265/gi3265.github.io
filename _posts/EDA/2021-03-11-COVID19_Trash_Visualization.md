@@ -1416,4 +1416,4 @@ pd.options.plotting.backend = 'plotly'
 home_weekly[['dt', 'week_avg']].groupby('dt').sum().plot()
 ```
 
-![2021-03-10-COVID19_Trash](/assets/images/2021-03-10-COVID19_Trash.png)
+![2021-03-10-COVID19_Trash](/assets/images/EDA/2021-03-10-COVID19_Trash.png)
