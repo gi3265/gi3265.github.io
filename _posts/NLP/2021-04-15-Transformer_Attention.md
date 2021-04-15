@@ -18,6 +18,6 @@ toc_sticky: True
 
 ## 1. NLP 아키텍처의 발전 과정
 
-![image-20210415235942278](assets\images\NLP\image-20210415235942278.png)
+![image-20210415235942278](assets\images\image-20210415235942278.png)
 
 # 2. 
