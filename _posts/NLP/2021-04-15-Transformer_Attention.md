@@ -15,6 +15,8 @@ typora-root-url: ../../
 
 # 자연어 처리: Transformer(self-attention)
 
+출처: https://www.youtube.com/watch?v=AA621UofTUA
+
 * Transformer Architecture에서는 'Attention'이 가장 중요한 아이디어
 
 ## 1. NLP 모델(아키텍처)의 발전 과정

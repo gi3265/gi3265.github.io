@@ -108,19 +108,21 @@ IDEA: RNN의 기본 방식 굳이 써야 해? 없애버리자. -> RNN에서 enco
 
 ![image-20210416024444456](/assets/images/NLP/image-20210416024444456.png)
 
-<학습>
+-학습 과정-
 
 1. Decoder 결과가 정답과 많이 다름:
-   * 좋지 못한 context vector -> 좋지 못한 attention weight
-   * Fully connected feed forward network에서 score 조정 -> s1~s3 조정됨에 따라 Attention weight도 조정
-   
-2. 기존 RNN + Attention 방식: decoder가 해석하기에 가장 적합한 weight 찾고자 노력
 
+* 좋지 못한 context vector -> 좋지 못한 attention weight
+* Fully connected feed forward network에서 score 조정 -> s1~s3 조정됨에 따라 Attention weight도 조정
+
+2. 기존 RNN + Attention 방식: decoder가 해석하기에 가장 적합한 weight 찾고자 노력
 3. Attention이 decoder이 아니라, input인 값을 가장 잘 표현할 수 있도록 학습하면?
 
-   -> 자기 자신을 가장 잘 표현할 수 있는 좋은 임베딩
+-> 자기 자신을 가장 잘 표현할 수 있는 좋은 임베딩
 
 4. Self-Attention 모델의 탄생!
+
+
 
 ### 2.4 Self-Attention 모델의 작동 원리
 
