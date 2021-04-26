@@ -146,14 +146,12 @@ dfs(0, 0)
    * 바로 앞의 과정을 각 가상세계마다 반복하여 **각 가상세계에서의 치킨거리 중 최솟값** 을 version변수에 저장한다.
    * version 출력!
 
-   <img src="../../../../../../AppData/Roaming/Typora/typora-user-images/image-20210426175750143.png" alt="image-20210426175750143" style="zoom: 50%;" />
-
    ```python
-   version = sys.maxsize  #for문 바로 위에서 정의
+version = sys.maxsize
    for v in range(len(locations)):
        dist_sum = 0
        for i in range(len(home)):
-           neighbor = sys.maxsize #for문 바로 위에서 정의
+           neighbor = sys.maxsize
            for j in range(len(locations[v])):
                neighbor = min(neighbor, abs(home[i][0] - locations[v][j][0]) + abs(home[i][1] - locations[v][j][1]))
            dist_sum += neighbor #'각 집 입장에서 가장 가까운 치킨 집 거리(neighbor)'들을 더하는 과정. 루프가 끝나면 dist_sum은 한 가상 세계에서의 치킨거리 합이 된다.
@@ -161,5 +159,55 @@ dfs(0, 0)
    
    print(version)
    ```
+
+
+
+## *** 코드 요약 ***
+
+```python
+import sys
+
+N, M = map(int, input().split())
+
+link = []
+for i in range(N):
+    link.append(list(map(int, input().split())))
+
+chicken = []
+home = []
+for r in range(N):
+    for c in range(N):
+        if link[r][c] == 2:
+            chicken.append([r,c])
+        elif link[r][c] == 1:
+            home.append([r,c])
+
+comb = []
+locations = []
+
+def dfs(depth, branch):
+    if depth == M:
+        locations.append(list(tuple(comb)))
+        return
+    for i in range(branch, len(chicken)):
+        comb.append(chicken[i])
+        dfs(depth+1, i + 1)
+        comb.pop()
+            
+dfs(0, 0)
+version = sys.maxsize
+for v in range(len(locations)):
+    dist_sum = 0
+    for i in range(len(home)):
+        neighbor = sys.maxsize
+        for j in range(len(locations[v])):
+            neighbor = min(neighbor, abs(home[i][0] - locations[v][j][0]) + abs(home[i][1] - locations[v][j][1]))
+        dist_sum += neighbor
+    version = min(version, dist_sum)
+
+print(version)
+```
+
+
 
 -끝-
