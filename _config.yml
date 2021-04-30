@@ -276,7 +276,7 @@ defaults:  #Front Matter에서 같은 형식을 통해 개별적으로 설정 �
       type: posts
     values:
       layout: single
-      author_profile: false #true
+      author_profile: true
       read_time: true
       comments: true
       share: true
