@@ -1,32 +1,35 @@
-article.page {
-    float: left;
-    width: 100%;
-}
+// 왼쪽 사이드바 필요로 하지 않을 경우
+// article.page {
+//     float: left;
+//     width: 100%;
+// }
 
-.wide2 {
-    .page {
-      float: left;
-      width: 100%;
-      @include breakpoint($large) {
-        padding-left: 0;
-      }
+// .wide2 {
+//     .page {
+//       float: left;
+//       width: 100%;
+//       @include breakpoint($large) {
+//         padding-left: 0;
+//       }
   
-      @include breakpoint($x-large) {
-        padding-left: 0;
-      }
-    }
+//       @include breakpoint($x-large) {
+//         padding-left: 0;
+//       }
+//     }
   
-    .page__related {
-      @include breakpoint($large) {
-        padding-left: 0;
-      }
+//     .page__related {
+//       @include breakpoint($large) {
+//         padding-left: 0;
+//       }
   
-      @include breakpoint($x-large) {
-        padding-left: 0;
-      }
-    }
-  }
-  
+//       @include breakpoint($x-large) {
+//         padding-left: 0;
+//       }
+//     }
+//   }
+
+
+
 /*!
  * Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
  * Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
