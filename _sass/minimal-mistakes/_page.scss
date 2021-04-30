@@ -35,10 +35,6 @@ body {
   flex: 1 0 auto;
 }
 
-.sidebar {
-  @include span(1 of 12);
-}
-
 .page {
   @include breakpoint($large) {
     float: right;
