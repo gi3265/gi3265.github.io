@@ -97,8 +97,8 @@ analytics:
 author:
   name             : "SOpt"
   avatar           : "/assets/images/ironman.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "You always have other **options** to choose"
-  location         : "Incheon, Republic Of Korea"
+  bio              : "**Options**"
+  location         : "Incheon, S.Korea"
   email            :
   links:
     - label: "Email"
