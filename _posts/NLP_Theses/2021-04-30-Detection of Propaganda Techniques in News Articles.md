@@ -24,7 +24,7 @@ toc_sticky: true
   * Span Identification(SI):   주어진 평문(plain-text)에서, 선전 기술이 하나라도 녹아 있는 텍스트 부분을 찾아내는 것. 선전 기술의 유무만을 판단하므로 이진 분류 과제에 속한다.
   * Techinque Classification(TC): 선전 기술이 들어있다고 판단된 텍스트 조각과 그 맥락이 담긴 문서가 주어졌을 때, 구체적으로 어떤 선전 기술이 적용되었는지 파악하는 것. 14개의 선전 기술 중 하나를 정해 판단하는 것이므로 다중 분류 과제에 속한다.
   
-  ![image-20210430161442821](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430161442821.png)
+  ![image-20210430161442821](assets\images\NLP\propaganda_detection\image-20210430161442821.png)
 * 본고에서는 과제를 소개하고 경진대회 결과를 분석한다. 특히 높은 점수를 기록한 상위 10개 팀이 어떤 방법을 썼는지 살펴본다.
 * 결과부터 말해보자면, 두 하위 과제에서의 최고 시스템들은 모두 pre-trained Transformers와 Ensemble기법을 사용했다.
 
@@ -50,7 +50,7 @@ toc_sticky: true
 
   다양한 선전 기술들을 예시를 통해 설명하자면 다음과 같다.
 
-![image-20210430213140911](../../assets/images/NLP/propaganda_detection/image-20210430213140911.png)
+![image-20210430213140911](/assets/images/NLP/propaganda_detection/image-20210430213140911.png)
 
 * 무거운 용어: 도널드 트럼프가 바이러스를 죽이기 위해 살균제를 주입하자고 제안하자 ***광분했다***
 
@@ -117,7 +117,7 @@ toc_sticky: true
 
   * 식 (1)의 경우 |S| = 0이  되는 경우 결과값으로 0을 반환하도록 정의하고, 식 (2)의 경우 |T|가 0이 되는 경우 결과값을 0으로 반환하도록 정의한다. 예측된 범위가 겹쳐질 수 있음에 유의한다(Figure 4에서  s3과 s4). 그러므로 (1)과 (2)가 1보다 비슷하거나 작은 값들을 반환하도록 하기 위해서는 모든 중첩된 주석들이 그들의 선전 기술 분류와는 독립적으로 우선 병합이 되어야 한다(병합하되 선전 기술에 대한 분류 정보는 남기도록 한다는 말인 듯). 이렇게 병합된 예가 s4이다. 마지막으로 SI에 대한 평가 지표는 F1 score로 다음 식과 같이 P(S,T)와 R(S,T)의 조화평균으로 정의된다.
 
-  ![image-20210430180457325](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430180457325.png)
+  ![image-20210430180457325](assets\images\NLP\propaganda_detection\image-20210430180457325.png)
 
 * **Subtask TC**: 기사의 선전 스니펫이 주어졌을 때, 그 곳에서 어떤 선전 기술이 활용되었는가를 인식해 내는 것이 TC의 내용이다. 동일한 스니펫 범위에 대해 서로 다른 선전 기술이 주석으로 달려 있는 경우가 있기 때문에(전체 주석의 1.8% 정도...) TC는 원래 multi-label multi-class classification(한 분류대상이 여러 개의 카테고리에 속하는 경우에서의 분류)에 속한다. 하지만 본고에서는 다음 조정을 거침으로써 해당 문제를 single-label multi-class 문제(한 분류대상이 하나의 카테고리에 속하는 분류)로 바라보고자 한다.
 
