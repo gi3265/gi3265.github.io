@@ -282,7 +282,7 @@ defaults:  #Front Matter에서 같은 형식을 통해 개별적으로 설정 �
       share: true
       related: true
       show_date: true
-      classes: wide
+      #classes: wide
   
   # page는 사이트 내 특정 주소에 보여줄 (날짜와 관련없는) 페이지를 작성할 수 있다.
   # _pages
