@@ -24,7 +24,7 @@ toc_sticky: true
   * Span Identification(SI):   주어진 평문(plain-text)에서, 선전 기술이 하나라도 녹아 있는 텍스트 부분을 찾아내는 것. 선전 기술의 유무만을 판단하므로 이진 분류 과제에 속한다.
   * Techinque Classification(TC): 선전 기술이 들어있다고 판단된 텍스트 조각과 그 맥락이 담긴 문서가 주어졌을 때, 구체적으로 어떤 선전 기술이 적용되었는지 파악하는 것. 14개의 선전 기술 중 하나를 정해 판단하는 것이므로 다중 분류 과제에 속한다.
   
-  ![image-20210430161442821](assets\images\NLP\propaganda_detection\image-20210430161442821.png)
+  ![image-20210430161442821](/assets/images/NLP/propaganda_detection/image-20210430161442821.png)
 * 본고에서는 과제를 소개하고 경진대회 결과를 분석한다. 특히 높은 점수를 기록한 상위 10개 팀이 어떤 방법을 썼는지 살펴본다.
 * 결과부터 말해보자면, 두 하위 과제에서의 최고 시스템들은 모두 pre-trained Transformers와 Ensemble기법을 사용했다.
 
@@ -87,15 +87,15 @@ toc_sticky: true
 
   PTC-SemEval20 말뭉치를 만들기 위해 2017년 중반부터 2019년 후반까지의 기간동안 발행된 신문들 속의 신문 기사들을 수집했다. 주석을 다는 작업은 선전 문구를 발견하고 동시에, 선전 기술들 중 어떤 것에 해당되는지 라벨링을 달아주는 것으로 이루어졌다. 이는 두 단계로 진행되었는데, (i).주석 전문가들 각각 독립적으로 기사들에 라벨을 다는 단계와, (ii).이후 한 주석 전문가만 선전 문구로 라벨링을 한 기사에 대해 의견을 나누고 각자의 결과들을 통합하는 단계가 그것이다.
 
-![image-20210430170545657](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430170545657.png)
+![image-20210430170545657](/assets/images/NLP/propaganda_detection/image-20210430170545657.png)
 
 (원본 자료와(왼쪽) 주석을 단 결과물(오른쪽))
 
-![image-20210430170927360](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430170927360.png)
+![image-20210430170927360](/assets/images/NLP/propaganda_detection/image-20210430170927360.png)
 
   위의 표는 말뭉치 통계값들을 보여준다. 서로 다른 구분에 속해 있는 선전 토막(이하 스니펫) 들이 겹쳐지는 것을 피해야 하기에 SI과제를 위해 주어진 test set 선전 스니펫 수(1405)가 TC과제를 위한 선전 스니펫 수(1790)보다 적었다(무슨 말이지). 
 
-![image-20210430172857437](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430172857437.png)
+![image-20210430172857437](/assets/images/NLP/propaganda_detection/image-20210430172857437.png)
 
   536개의 기사들은 8981개의 선전 스니펫들을 담고 있었고 각각의 스니펫들은 14가지의 선전 기술의 종류들에 속해 있었다. 가장 빈번하게 사용된 선전 기술은 '무거운 용어(Loaded Language)'였다. 두번째로 빈번하게 사용된 기술인 '라벨링'보다 2배 가량 더 빈번하게 사용되었음을 알 수 있었다. 가장 빈번하게 사용된 이 두 기술은 비교적 짧은 길이로 표현이 많이 된 반면, '과장', '지나친 단순화', '슬로건'등의 선전 기술들은 길게 표현이 되었음을 위의 그래프로 부터 확인할 수 있다.
 
@@ -107,17 +107,17 @@ toc_sticky: true
 
   * d를 D세트 안에 있는 뉴스 기사라고 해 보자. 실제 선전 문구의 존재 범위(이하 gold span)  t는 연속된 글자 인덱스 범위로 표현된다. 
 
-    ![image-20210430174814602](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430174814602.png)
+    ![image-20210430174814602](/assets/images/NLP/propaganda_detection/image-20210430174814602.png)
 
     예를 들어,  위 그림에서 [4, 19]가 실제 선전 문구로부터 뽑아낸 t라고 할 수 있다. 이렇듯 d기사로부터 모든 선전문구들의 인덱스 범위들을 모두 뽑아 Td 셋에 담고(Td = {t1, t2, ***, tn}) 그러한 과정을 다른 기사들에서도 똑같이 반복하여 얻어낸 Tc, Tf, Te 등등을 T set에 담는다.(T = {Td}d). 
 
     비슷한 과정을 모델이 예측한 gold span에 대해서도 반복하여 기사 d에서 뽑아낸 gold span 들로 이루어진 Sd set과 Sd의 모인 Dset을 만든다. 그런 이후, 정확도 P와 재현율 R을 다음 공식을 적용함으로써 계산해 낸다.
 
-    ![image-20210430175653741](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430175653741.png)
+    ![image-20210430175653741](/assets/images/NLP/propaganda_detection/image-20210430175653741.png)
 
   * 식 (1)의 경우 |S| = 0이  되는 경우 결과값으로 0을 반환하도록 정의하고, 식 (2)의 경우 |T|가 0이 되는 경우 결과값을 0으로 반환하도록 정의한다. 예측된 범위가 겹쳐질 수 있음에 유의한다(Figure 4에서  s3과 s4). 그러므로 (1)과 (2)가 1보다 비슷하거나 작은 값들을 반환하도록 하기 위해서는 모든 중첩된 주석들이 그들의 선전 기술 분류와는 독립적으로 우선 병합이 되어야 한다(병합하되 선전 기술에 대한 분류 정보는 남기도록 한다는 말인 듯). 이렇게 병합된 예가 s4이다. 마지막으로 SI에 대한 평가 지표는 F1 score로 다음 식과 같이 P(S,T)와 R(S,T)의 조화평균으로 정의된다.
 
-  ![image-20210430180457325](assets\images\NLP\propaganda_detection\image-20210430180457325.png)
+  ![image-20210430180457325](/assets/images/NLP/propaganda_detection/image-20210430180457325.png)
 
 * **Subtask TC**: 기사의 선전 스니펫이 주어졌을 때, 그 곳에서 어떤 선전 기술이 활용되었는가를 인식해 내는 것이 TC의 내용이다. 동일한 스니펫 범위에 대해 서로 다른 선전 기술이 주석으로 달려 있는 경우가 있기 때문에(전체 주석의 1.8% 정도...) TC는 원래 multi-label multi-class classification(한 분류대상이 여러 개의 카테고리에 속하는 경우에서의 분류)에 속한다. 하지만 본고에서는 다음 조정을 거침으로써 해당 문제를 single-label multi-class 문제(한 분류대상이 하나의 카테고리에 속하는 분류)로 바라보고자 한다.
 
@@ -152,7 +152,7 @@ toc_sticky: true
 
 ### 4.1 Span Identification Subtask(SI)
 
-![image-20210430183039042](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430183039042.png)
+![image-20210430183039042](/assets/images/NLP/propaganda_detection/image-20210430183039042.png)
 
 위 표는 SI과제에 참여한 상위 시스템들의 구성을 개략적으로 보여준다. 상위 10개의 시스템 모두 LSTM이나 CRF등과 같이 활용하는 등, Transformer을 최소한 어느 정도 활용했다. 거의 모든 경우, Transformer에 의해 추출된 특징들은 개체명들, 주관적 단서, 정서 등의 도메인 지식을 활용하여 추출한 특징들(engineered features) 에 의해 보충되었다.
 
@@ -184,7 +184,7 @@ SI 과제의 베이스라인은 무작위적으로 spans를 만드는 단순한 
 
  상위 5개 모델들 중 단지 3 모델만이 test set에 대해서도 상위 5위에 랭크되었다는 점이 눈여겨 볼 만한데, 그것은 test셋에서 순위가 크게 떨어진 팀들의 경우 training set을 학습하는 과정에서 과적합이 발생했을 수 있음을 의미한다. 반면, 순위를 지킨 나머지 3개 팀(Hitachi, ApplicaAI 그리고 aschern)은 보다 일반화(generalize)에 능한 견고한 시스템을 가졌음을 반영한다. 
 
-![image-20210430191538003](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430191538003.png)
+![image-20210430191538003](/assets/images/NLP/propaganda_detection/image-20210430191538003.png)
 
   위의 도식 5는 테스트셋에서 좋은 성능을 보인 모델들을 결합했을 경우의 성능 향상을 보여준다. 모든 예측은 글자 단위로 이루어졌다. 여기서 union은 모델간 예측값들의 합집합(한 모델이라도 해당 글자를 선전 스니펫의 일부라고 판단했다면 해당 글자를 선전 문구의 일부라 판단), intersection은 교집합(모든 모델이 해당 글자를 선전 문구라고 인정한 경우에만 flag로 표시), 그리고 majority Voting은 앙상블 기법의 일종으로 각 모형을 통해 나온 분류값들을 투표를 통해 우세한(과반) 분류값을 선정하는 모델을 말한다. 
 
@@ -192,11 +192,11 @@ SI 과제의 베이스라인은 무작위적으로 spans를 만드는 단순한 
 
 [참고. 정밀도와 재현률]
 
-![image-20210430192930011](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430192930011.png)
+![image-20210430192930011](/assets/images/NLP/propaganda_detection/image-20210430192930011.png)
 
 ---
 
-![image-20210430192951796](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430192951796.png)
+![image-20210430192951796](/assets/images/NLP/propaganda_detection/image-20210430192951796.png)
 
   만약 우리가 높은 정확도의 모델을 만들고자 한다면 상위 1,2위의 모델들을 결합했을 경우 정확도가 66.95까지 오르는 intersection을 적용하는 것이 좋을 것이다. 하지만 그에 따라 소실되는 스니펫의 양또한 상당하기에 재현률 또한 급감한다(실제 양성인 자료들까지 다수 삭제가 되므로). Majority voting은 정밀도와 재현율 모두에서 신뢰할만한 값을 유지하며 그 사이 어딘가에 있다.
 
@@ -204,7 +204,7 @@ SI 과제의 베이스라인은 무작위적으로 spans를 만드는 단순한 
 
 ### 5.2 TC과제의 결과
 
-  ![image-20210430193405130](C:\Users\SGI\OneDrive\WallPaper\github\gi3265.github.io\assets\images\NLP\propaganda_detection\image-20210430193405130.png)
+  ![image-20210430193405130](/assets/images/NLP/propaganda_detection/image-20210430193405130.png)
 
   표6은 TC과제에서 test set에 대해 보인 성능을 나타낸다. 베이스라인에서는 스니펫의 길이만을 특성으로 활용한 로지스틱 회귀 분류 모델을 활용했다. 흥미롭게도, SI과제에서와 유사하게도 development set(이하 train set)에서 상위 5개의 성능을 보인 팀들 중 정작 test set에서는 단지 2개 팀만이 상위 5위 안에 랭크되었다. 자연스럽게도 train set에서는 무난한 성능을 보인 Hitachi(public 리더보드 8등)와 같은 몇몇 모델들이 test set에 대해서는 오히려 더 나은 성능을 보인 것이 관찰되었다. 
 
