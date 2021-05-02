@@ -11,8 +11,6 @@ toc: true
 toc_sticky: true 
 ---
 
-# "Detection of Propaganda Techniques in News Articles" Thesis Study
-
 (Giovanni Da San Martino , Alberto Barron-Cede , Henning Wachsmuth, Rostislav Petrov and Preslav Nakov)
 
 
