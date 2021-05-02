@@ -1,36 +1,3 @@
-// 왼쪽 사이드바 필요로 하지 않을 경우: 삭제해버림! 
-// (현재 이 상태다. 여기서 .page는 다시 right로 돌리고 _page.scss수정해서 단지 왼쪽 사이드바에 할당된 공간만 줄이고 싶은 상황)
-article.page {
-    float: left;
-    width: 100%;
-}
-
-.wide2 {
-    .page {
-      float: left;
-      width: 100%;
-      @include breakpoint($large) {
-        padding-left: 0;
-      }
-  
-      @include breakpoint($x-large) {
-        padding-left: 0;
-      }
-    }
-  
-    .page__related {
-      @include breakpoint($large) {
-        padding-left: 0;
-      }
-  
-      @include breakpoint($x-large) {
-        padding-left: 0;
-      }
-    }
-  }
-
-
-
 /*!
  * Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
  * Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
